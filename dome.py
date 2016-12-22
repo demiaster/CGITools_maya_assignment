@@ -45,50 +45,63 @@ def get_center(face, polygon):
     return [x_center, y_center, z_center]
 
 
-# creating a sphere and storing its name
-cmds.polySphere(name='dome_right', radius=1, subdivisionsX=10, subdivisionsY=10)
+def model_dome(_dome):
+    """ Calculate center coordinates of the given face
+
+        - **parameters**, **types**, **return** and **return types**::
+
+             :param _dome: is the name of the Maya face object
+             :type _dome: string
+
+        """
+    # creating a sphere and storing its name
+    cmds.polySphere(name=str(_dome), radius=1, subdivisionsX=10, subdivisionsY=10)
+
+    # get the selection of the object
+    list_faces = []
+
+    # loop for each face...
+    for i in xrange(89, 80, -1):
+        list_faces.append(_dome + '.f[' + str(i) + ']')
+
+    for i in xrange(19, 0, -1):
+        list_faces.append(_dome + '.f[' + str(i) + ']')
+    list_faces = cmds.ls(list_faces, fl=True)
+    cmds.delete(list_faces)
+    cmds.delete(_dome + '.f[61]')
+    cmds.delete(_dome + '.f[0]')
+
+    # fill bottom hole
+    cmds.select(_dome + '.e[1]', r=True)
+    cmds.polyCloseBorder()
+
+    # rotate edge loop
+    for i in range(1, 7):
+        angle = 36 * i
+        edge_loop = _dome + '.e[' + str(i) + '0:' + str(i) + '9]'
+        cmds.rotate(0, str(angle) + 'deg', 0, str(edge_loop))
+
+    # scaling edge loops
+    scale_value = 1
+    step = 0.2
+    for i in range(4, 7):
+        edge_loop = _dome + '.e[' + str(i) + '0:' + str(i) + '9]'
+        scale_value -= step
+        # scale only x, z value so that they remain on the same height
+        cmds.scale(scale_value, 1, scale_value, str(edge_loop))
+        step += 0.1
+
+    # moving tip of the dome
+    cmds.polyMoveVertex(_dome + '.vtx[70]', ty=0.2)
+
+    # scaling whole dome to fit the tower
+    scale = 0.52
+    cmds.scale(scale, scale, scale, str(_dome))
+
+    return
+
 dome = 'dome_right'
-
-# get the selection of the object
-listFaces = []
-
-# loop for each face...
-for i in xrange(89, 80, -1):
-    listFaces.append(dome + '.f[' + str(i) + ']')
-
-for i in xrange(19, 0, -1):
-    listFaces.append(dome + '.f[' + str(i) + ']')
-listFaces = cmds.ls(listFaces, fl=True)
-cmds.delete(listFaces)
-cmds.delete(dome + '.f[61]')
-cmds.delete(dome + '.f[0]')
-
-# fill bottom hole
-cmds.select(dome + '.e[1]', r=True)
-cmds.polyCloseBorder()
-
-# rotate edge loop
-for i in range(1, 7):
-    angle = 36 * i
-    edgeLoop = dome + '.e[' + str(i) + '0:' + str(i) + '9]'
-    cmds.rotate(0, str(angle) + 'deg', 0, str(edgeLoop))
-
-# scaling edge loops
-scaleValue = 1
-step = 0.2
-for i in range(4, 7):
-    edgeLoop = dome + '.e[' + str(i) + '0:' + str(i) + '9]'
-    scaleValue -= step
-    # scale only x, z value so that they remain on the same height
-    cmds.scale(scaleValue, 1, scaleValue, str(edgeLoop))
-    step += 0.1
-
-# moving tip of the dome
-cmds.polyMoveVertex(dome + '.vtx[70]', ty=0.2)
-
-# scaling whole dome to fit the tower
-scale = 0.52
-cmds.scale(scale, scale, scale, str(dome))
+model_dome(dome)
 
 # storing name of the tower we are working on
 towerName = 'turret_wall'
