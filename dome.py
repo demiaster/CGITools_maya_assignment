@@ -50,7 +50,7 @@ def model_dome(_dome):
 
         - **parameters**, **types**, **return** and **return types**::
 
-             :param _dome: is the name of the Maya face object
+             :param _dome: is the name of the Maya object to be created
              :type _dome: string
 
         """
@@ -98,28 +98,43 @@ def model_dome(_dome):
     scale = 0.52
     cmds.scale(scale, scale, scale, str(_dome))
 
+    # moving dome pivot to center of bottom face
+    new_pivot_pos = get_center(dome + '.f[70]', dome)
+    cmds.move(new_pivot_pos[0], new_pivot_pos[1], new_pivot_pos[2], _dome + '.rotatePivot', a=True)
+
     return
 
-dome = 'dome_right'
+dome = 'right_dome'
 model_dome(dome)
 
 # storing name of the tower we are working on
 towerName = 'turret_wall'
 
-# moving dome pivot to center of bottom face
-newPivotPos = get_center(dome + '.f[70]', dome)
-cmds.move(newPivotPos[0], newPivotPos[1], newPivotPos[2], dome + '.rotatePivot', a=True)
-
 # storing center for top tower face
 targetPosition = get_center(towerName + '.f[7]', towerName)
 
+# moving dome to its final position
 cmds.move(targetPosition[0], targetPosition[1], targetPosition[2], dome, rpr=True, a=True)
-print "final pivot position : " + str(cmds.pointPosition(dome + '.rotatePivot'))
-# TODO: create copy
-# TODO: move copy to its right position
-# TODO: group right_dome
-# TODO: group left_dome
+
+# creating second dome, as a copy
+cmds.duplicate(dome, name='left_dome')
+dome_left = 'left_dome'
+
+# storing name of the tower we are working on
+towerName = 'left_turret'
+
+# storing center for top tower face
+targetPosition = get_center(towerName + '.f[6]', towerName)
+
+# moving dome to its final position
+cmds.move(targetPosition[0], targetPosition[1], targetPosition[2], dome_left, rpr=True, a=True)
+
+# grouping right dome
+cmds.parent(dome, 'turrets')
+# grouping left dome
+cmds.parent(dome_left, 'turrets')
 
 # clean the history
 cmds.delete(dome, ch=1)
-# TODO: clean history for both of them
+cmds.delete(dome_left, ch=1)
+
