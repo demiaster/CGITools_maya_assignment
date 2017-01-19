@@ -27,8 +27,17 @@ The code for the script will appear in the script Python tab that you created.
 * `Ctrl + a` to highlight all the code
 * `Shift + Enter` to run the script
 
-*WARNING*
+_WARNING_
+
 If you want to run the script again, please make sure to remove the existing domes geometry.
 
 ##Images
+
+![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/final_dome.png "Final Shape Dome, perspective")
+![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/front_view_texture.png "Dome, front view and texture")
+![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/front_view_wireframe.png "Dome, front view and wireframe")
+![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/top_view_texture.png "Dome, top view and texture")
+![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/top_view_wireframe.png "Dome, top view and wireframe")
+![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/final_scene.png "Final scene, perspective and texture")
+
 
