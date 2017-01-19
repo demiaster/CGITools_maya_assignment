@@ -13,3 +13,22 @@ The script does the following things:
 ##Motivation
 
 Since the dome shape present a spiral pattern on its surface, a script can easily produce that effect and can avoid tedious work of having to manipulate by hand each horizontal edge loop.
+
+##Examples
+
+* on the top of the window, go to `Windows -> General Editors -> Script Editor`
+* click on the `+` button at the middle right side of the Script Editor window
+* select Python as scripting language
+* on the top left of the Script Editor window, click on `File -> Load Script...`
+* choose dome.py from the `script` folder of the project
+
+The code for the script will appear in the script Python tab that you created.
+
+* `Ctrl + a` to highlight all the code
+* `Shift + Enter` to run the script
+
+*WARNING*
+If you want to run the script again, please make sure to remove the existing domes geometry.
+
+##Images
+
