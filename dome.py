@@ -46,9 +46,9 @@ def get_center(face, polygon):
 
 
 def model_dome(_dome):
-    """ Calculate center coordinates of the given face
+    """ Create a sphere and manipulate it to get the desired dome shape
 
-        - **parameters**, **types**, **return** and **return types**::
+        - **parameters**, **types**::
 
              :param _dome: is the name of the Maya object to be created
              :type _dome: string
@@ -57,7 +57,7 @@ def model_dome(_dome):
     # creating a sphere and storing its name
     cmds.polySphere(name=str(_dome), radius=1, subdivisionsX=10, subdivisionsY=10)
 
-    # get the selection of the object
+    # prepare empty list to store faces that will be removed
     list_faces = []
 
     # loop for each face...
@@ -71,11 +71,11 @@ def model_dome(_dome):
     cmds.delete(_dome + '.f[61]')
     cmds.delete(_dome + '.f[0]')
 
-    # fill bottom hole
+    # create new face to fill bottom hole
     cmds.select(_dome + '.e[1]', r=True)
     cmds.polyCloseBorder()
 
-    # rotate edge loop
+    # rotate edge loops by 36° (360° / 10 rows), one at the time
     for i in range(1, 7):
         angle = 36 * i
         edge_loop = _dome + '.e[' + str(i) + '0:' + str(i) + '9]'
