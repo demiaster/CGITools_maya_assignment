@@ -20,7 +20,8 @@ def get_center(face, polygon):
 
     # storing all the vertexes surrounding the face
     raw_vertexes = cmds.polyInfo(faceToVertex=True)
-    # parsing horrible polyInfo output to have a normal array
+
+    # parsing polyInfo output to have a normal array
     list_vertexes = map(lambda x: int(x), "".join(raw_vertexes).split(':')[1].split())
 
     # initialising accumulators
@@ -64,6 +65,7 @@ def model_dome(_dome):
     for i in xrange(89, 80, -1):
         list_faces.append(_dome + '.f[' + str(i) + ']')
 
+    # delete faces
     for i in xrange(19, 0, -1):
         list_faces.append(_dome + '.f[' + str(i) + ']')
     list_faces = cmds.ls(list_faces, fl=True)
@@ -75,7 +77,7 @@ def model_dome(_dome):
     cmds.select(_dome + '.e[1]', r=True)
     cmds.polyCloseBorder()
 
-    # rotate edge loops by 36° (360° / 10 rows), one at the time
+    # rotate edge loops by 36 degree (360 degree / 10 rows), one at the time
     for i in range(1, 7):
         angle = 36 * i
         edge_loop = _dome + '.e[' + str(i) + '0:' + str(i) + '9]'
@@ -116,9 +118,9 @@ targetPosition = get_center(towerName + '.f[7]', towerName)
 # moving dome to its final position
 cmds.move(targetPosition[0], targetPosition[1], targetPosition[2], dome, rpr=True, a=True)
 
-# creating second dome, as a copy
-cmds.duplicate(dome, name='left_dome')
-dome_left = 'left_dome'
+# creating left_dome, as a copy
+left_dome = 'left_dome'
+cmds.duplicate(dome, name=left_dome)
 
 # storing name of the tower we are working on
 towerName = 'left_turret'
@@ -126,15 +128,13 @@ towerName = 'left_turret'
 # storing center for top tower face
 targetPosition = get_center(towerName + '.f[6]', towerName)
 
-# moving dome to its final position
-cmds.move(targetPosition[0], targetPosition[1], targetPosition[2], dome_left, rpr=True, a=True)
+# moving left_dome to its final position
+cmds.move(targetPosition[0], targetPosition[1], targetPosition[2], left_dome, rpr=True, a=True)
 
-# grouping right dome
+# grouping domes
 cmds.parent(dome, 'turrets')
-# grouping left dome
-cmds.parent(dome_left, 'turrets')
+cmds.parent(left_dome, 'turrets')
 
 # clean the history
 cmds.delete(dome, ch=1)
-cmds.delete(dome_left, ch=1)
-
+cmds.delete(left_dome, ch=1)
