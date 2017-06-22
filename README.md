@@ -1,4 +1,4 @@
-#Dome.py
+# Dome.py
 
 Run `dome.py` to create the dome shape procedurally and to place the object in the correct position within the scene.
 
@@ -10,15 +10,15 @@ The script does the following:
 * it places them in the right position.
 * it performs a final cleanup of the manipulations that occurred in order to keep the outline and maya history clean and readable.
 
-##Motivation
+## Motivation
 
 Since the dome shape presents a spiral pattern on its surface, a script can easily produce that effect and can avoid tedious work of having to manipulate by hand each horizontal edge loop.
 
-##Requirements
+## Requirements
 
 Tested on: Maya 2016 (python engine 2.7).
 
-##Execute
+## Execute
 
 * on the top of the window, go to `Windows -> General Editors -> Script Editor`
 * click on the `+` button at the middle right side of the Script Editor window
@@ -35,7 +35,7 @@ _WARNING_
 
 If you want to run the script again, please make sure to remove the existing domes geometry.
 
-##Examples
+## Examples
 
 ![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/final_dome.png "Final Shape Dome, perspective")
 ![alt text](https://github.com/demiaster/CGITools_maya_assignment/blob/master/images/front_view_texture.png "Dome, front view and texture")
